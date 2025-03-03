@@ -16,3 +16,5 @@ class Browser {
     this.cookies = null;
   }
 }
+
+module.exports = Browser;

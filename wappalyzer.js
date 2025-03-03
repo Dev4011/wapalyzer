@@ -7,7 +7,7 @@
  */
 
 const validation = {
-  hostname: /(www.)?((.+?)\.(([a-z]{2,3}\.)?[a-z]{2,6}))$/,
+  hostname: /^(www\.)?(([a-zA-Z0-9-]+)\.([a-z]{2,63})(\.[a-z]{2,63})*)$/,
   hostnameBlacklist: /((local|dev(elopment)?|stag(e|ing)?|test(ing)?|demo(shop)?|admin|google|cache)\.|\/admin|\.local)/,
 };
 
@@ -607,7 +607,8 @@ class Wappalyzer {
           headerName = headerName.toLowerCase();
 
           if (headerName in headers) {
-            headers[headerName].forEach((headerValue) => {
+            const headerValues = Array.isArray(headers[headerName]) ? headers[headerName] : [headers[headerName]];
+            headerValues.forEach((headerValue) => {
               if (pattern.regex.test(headerValue)) {
                 addDetected(app, pattern, 'headers', headerValue, headerName);
               }
